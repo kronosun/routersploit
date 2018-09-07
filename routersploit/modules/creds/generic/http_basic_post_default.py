@@ -27,8 +27,8 @@ class Exploit(HTTPClient):
 
     path = OptString("/", "URL Path")
 
-    username_field = OptString("", "Name of the username input field on the interface")
-    password_field = OptString("", "Name of the password input field on the interface")
+    username_field = OptString("username", "Name of the username input field on the interface")
+    password_field = OptString("password", "Name of the password input field on the interface")
 
     verbosity = OptBool(True, "Display authentication attempts")
     stop_on_success = OptBool(True, "Stop on first valid authentication attempt")
