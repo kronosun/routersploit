@@ -91,9 +91,9 @@ class Exploit(HTTPClient):
             path=self.path
         )
 
-        if response is None:
-            print_error("Request Failed - Resource {} is not available".format(response.url)
-            return False
+        #if response is None:
+        #    print_error("Request Failed - Resource {} is not available".format(response.url)
+        #    return False
 
         if response.status_code == 200:
             return True
