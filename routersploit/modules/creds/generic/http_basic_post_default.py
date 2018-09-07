@@ -27,8 +27,8 @@ class Exploit(HTTPClient):
 
     path = OptString("/", "URL Path")
 
-    username_field = OptString("username", "Name of the username input field on the interface")
-    password_field = OptString("password", "Name of the password input field on the interface")
+    username_field = OptString("", "Name of the username input field on the interface")
+    password_field = OptString("", "Name of the password input field on the interface")
 
     verbosity = OptBool(True, "Display authentication attempts")
     stop_on_success = OptBool(True, "Stop on first valid authentication attempt")
@@ -86,18 +86,10 @@ class Exploit(HTTPClient):
                 break
 
     def check(self):
-        response = self.http_request(
-            method="GET",
-            path=self.path
-        )
-
-        if response is None:
-            print_error("Request Failed - Resource {} is not available".format(response.url)
-
-        if response.status_code == 200:
-            return True
-
-        return False
+        if self.username_field == "" or self.password_field == "":
+            return False
+        
+        return True
 
     @mute
     def check_default(self):

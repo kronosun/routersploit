@@ -24,4 +24,4 @@ class Exploit(HTTPBasicPostDefault):
     password_field = OptString("luci_password", "Target password field")
 
     threads = OptInteger(1, "Number of threads")
-    default = OptWordlist("admin:admin,admin:password,root:password", "User:Pass or file with default credentials (file://)")
+    defaults = OptWordlist("admin:admin,admin:password,root:password", "User:Pass or file with default credentials (file://)")
