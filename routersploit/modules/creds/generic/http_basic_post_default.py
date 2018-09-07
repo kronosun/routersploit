@@ -62,8 +62,8 @@ class Exploit(HTTPClient):
                 username, password = data.next().split(":")
 
                 auth = {
-                    username_field: username,
-                    password_field: password,
+                    self.username_field : username,
+                    self.password_field : password,
                     }
 
                 response = self.http_request(
@@ -91,9 +91,8 @@ class Exploit(HTTPClient):
             path=self.path
         )
 
-        #if response is None:
-        #    print_error("Request Failed - Resource {} is not available".format(response.url)
-        #    return False
+        if response is None:
+            print_error("Request Failed - Resource {} is not available".format(response.url)
 
         if response.status_code == 200:
             return True
