@@ -86,6 +86,27 @@ class Exploit(HTTPClient):
                 break
 
     def check(self):
+        session = HTMLSession()
+        r = session.get(URL)
+        
+        username_element = r.html.find('[type=text]', first=True)
+        if 'name' in username_element.attrs:
+            username_field = username_element.attrs['name']
+        elif 'id' in username_element.attrs:
+            username_field = username_element.attrs['id']
+        else:
+            print_error("No username field found")
+            return False
+        
+        password_element = r.html.find('[type=password]', first=True)
+        if 'name' in password_element.attrs:
+            password_field = password_element.attrs['name']
+        elif 'id' in password_element.attrs:
+            password_field = password_element.attrs['id']
+        else:
+            print_error("No password field found")
+            return False
+        
         if self.username_field == "" or self.password_field == "":
             return False
         
